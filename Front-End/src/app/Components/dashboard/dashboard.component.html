@@ -16,16 +16,15 @@
       <a class="nav-link text-light">Search</a>
     </li>
   </ul>
-  <div class="navbar-nav ml-auto my-auto mx-2 text-light" style="cursor: pointer;">
-    <li class="nav-item my-auto">
-      <a class="nav-link text-light">
-        <img src="{{user.photoUrl}}" class="col-md-3 my-auto">Welcome {{user.firstName}}
+  <div class="navbar-nav ml-auto my-auto text-light mx-2" style="cursor: pointer;">
+    <div class="nav-item my-auto flex d-flex justify-content-end">
+      <a class="nav-link text-light float-right">
+        <img src="{{user.photoUrl}}" class="col-md-4 my-auto img-fluid">Hey {{user.firstName}}!
       </a>
-    </li>
-
-    <li class="nav-item my-auto" (click)="signOut()">
+    </div>
+    <div class="nav-item my-auto" (click)="signOut()">
       <a class="nav-link text-light"><i class="fas fa-sign-out-alt"></i></a>
-    </li>
+    </div>
   </div>
 </nav>
 

@@ -1,9 +1,9 @@
 export class Opportunity {
 
     public id: number;
-    public userId:number;
+    public userId:String;
     public description: String;
-    public date: String;
+    public date: string;
     public skills: any;
     public location: String;
     public minExperience: number;
@@ -13,7 +13,7 @@ export class Opportunity {
 
     public default () {
         this.id = 0;
-        this.userId = 0;
+        this.userId = "";
         this.description = "";
         this.date = "";
         this.skills = "";

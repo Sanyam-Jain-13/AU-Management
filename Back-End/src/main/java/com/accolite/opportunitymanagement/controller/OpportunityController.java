@@ -12,13 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/opportunity")
-@CrossOrigin(origins = "http://localhost:4200")
-
+@CrossOrigin("http://localhost:4200")
 public class OpportunityController {
 
     @Autowired
     OpportunityServiceImpl opportunityServiceImpl;
 
+    @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/getAll")
     public List<Opportunity> getAllOpportunity(){
         List<Opportunity> opportunityList = new ArrayList<>();
@@ -30,10 +30,11 @@ public class OpportunityController {
         return opportunityList;
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/add")
     public int addOpportunity(@RequestBody Opportunity opportunity)
     {
-        return opportunityServiceImpl.insert(opportunity);
+        return opportunityServiceImpl.insert(opportunity) ;
     }
 
     @PostMapping(value = "/update/{id}")

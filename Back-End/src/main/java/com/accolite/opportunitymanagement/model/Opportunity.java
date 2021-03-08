@@ -9,7 +9,7 @@ public class Opportunity {
     private String description;
     private String location;
     private String skills;
-    private int userId;
+    private String userId;
     private int minExperience;
     private int demand;
     private Date date;
@@ -18,7 +18,7 @@ public class Opportunity {
     public Opportunity() {
     }
 
-    public Opportunity(int id, String description, String location, String skills, int userId, int minExperience, int demand, Date date) {
+    public Opportunity(int id, String description, String location, String skills, String userId, int minExperience, int demand, Date date) {
         this.id = id;
         this.description = description;
         this.location = location;
@@ -63,11 +63,11 @@ public class Opportunity {
         this.skills = skills;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

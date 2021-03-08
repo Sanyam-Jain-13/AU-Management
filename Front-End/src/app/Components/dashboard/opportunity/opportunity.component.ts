@@ -10,6 +10,8 @@ import {MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material/dialog
 import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import { SocialUser } from 'angularx-social-login';
 import {OpportunityService} from '../../../Services/opportunity.service';
+import { UserService } from 'src/app/Services/user.service';
+
 @Component({
   selector: 'app-opportunity',
   templateUrl: './opportunity.component.html',
@@ -19,11 +21,17 @@ import {OpportunityService} from '../../../Services/opportunity.service';
 export class OpportunityComponent implements OnInit {
 
   //ALL VARIABLES
+
   addOpportunityForm : FormGroup;
   minDate : Date;
   defaultOpportunity : Opportunity;
   snackBarConf = new MatSnackBarConfig();
   user:SocialUser;
+  data:Opportunity=new Opportunity();
+  opportunities : any;
+  dataSource = new MatTableDataSource < Opportunity > ();
+  allUser : any;
+  currentUser : any;
 
   //-----------------------------------------------------------------------
   //ALL THE VIEW TEMPLATES
@@ -32,13 +40,20 @@ export class OpportunityComponent implements OnInit {
 
   @ViewChild('snackBarTemplate')
   snackBarTemplate: TemplateRef < any > ;
+
+  @ViewChild(MatPaginator, {
+    static: true
+}) paginator: MatPaginator;
+
+
   //-----------------------------------------------------------------------
 
   constructor(
     private fb:FormBuilder,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
-    private OppoService : OpportunityService) { }
+    private OppoService : OpportunityService,
+    private UserService : UserService) { }
 
   //-----------------------------------------------------------------------
 
@@ -59,6 +74,21 @@ export class OpportunityComponent implements OnInit {
       minExperience: new FormControl('', [Validators.required]),
     });
 
+    this.UserService.getCurrentUser(this.user.id).subscribe((data : any)=>{
+      //current signed in user
+      this.currentUser = data;
+      this.UserService.getAllUsers().subscribe((data : any) =>{
+        //all users present
+        this.allUser = data;
+        console.log(this.allUser);
+        this.OppoService.getAllOpportunities().subscribe((data : any)=>{
+          this.opportunities = data;
+          this.dataSource.data = data;
+          this.dataSource.paginator = data;
+        });
+      })
+    })
+
     this.snackBarConf.duration = 3 * 1000;
     this.snackBarConf.horizontalPosition = 'end';
     this.snackBarConf.verticalPosition = 'bottom';
@@ -68,7 +98,6 @@ export class OpportunityComponent implements OnInit {
   //-----------------------------------------------------------------------
 
   displayedColumns: string[] = ['oppid', 'userName', 'userEmail', 'description', 'location', 'endDate', 'skills', 'minxp', 'demand','getdetails'];
-  dataSource = new MatTableDataSource < Opportunity > ();
 
   //-----------------------------------------------------------------------
 
@@ -97,7 +126,7 @@ export class OpportunityComponent implements OnInit {
     this.snackBar.open(msg,'', this.snackBarConf);
   }
 
-  public onSubmit(data : any)
+  public onSubmit()
   {
     // date: ""
     // demand: 0
@@ -110,21 +139,38 @@ export class OpportunityComponent implements OnInit {
     // userId: "105623594884336759836"
 
     //console.log(data);
-    const EndingDate = new Date(data.date);
-    const day = ("0" + EndingDate.getDate()).slice(-2);
-    const month = ("0" + (EndingDate.getMonth() + 1)).slice(-2);
-    const year = EndingDate.getFullYear();
-    const FinalEndingDate = year+"-"+month+"-"+day;
+    this.data=this.addOpportunityForm.value;
+    this.data.userId = String(this.user.id);
+    var event = new Date(this.data.date);
+    let date1 = JSON.stringify(event)
+    date1 = date1.slice(1,11)
 
-    data.date = FinalEndingDate;
-    data.userId = this.user.id;
+    console.log(this.data.date);
+    console.log(date1);
 
-    this.OppoService.addOpportunity(data).subscribe((data)=>{
+    this.data.date=date1;
+    this.data.location=this.data.location.charAt(0).toUpperCase() + this.data.location.slice(1);
+
+    console.log(this.data.location);
+
+    const words = this.data.skills.split(",");
+    this.data.skills=words.map((word) => {
+     return word[0].toUpperCase() + word.substring(1);
+}).join(",");
+
+    // const EndingDate = new Date(data.date);
+    // const day = ("0" + EndingDate.getDate()).slice(-2);
+    // const month = ("0" + (EndingDate.getMonth() + 1)).slice(-2);
+    // const year = EndingDate.getFullYear();
+    // const FinalEndingDate = year+"-"+month+"-"+day;
+
+
+    this.OppoService.addOpportunity(this.data).subscribe((data)=>{
       this.snackBarConf.panelClass = 'green-snackbar';
       this.snackBar.open("Opportunity Created Successfully",'', this.snackBarConf);
       this.addDialog.close();
     });
 
-    console.log(data);
+    //console.log(data);
   }
 }

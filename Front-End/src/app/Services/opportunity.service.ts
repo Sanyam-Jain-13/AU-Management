@@ -8,18 +8,25 @@ import { Opportunity } from '../Models/opportunity.model';
 export class OpportunityService {
 
   constructor(public http:HttpClient) { }
-  url : string = "http://localhost:8080/opportunity/add";
+  addUrl : string = "http://localhost:8080/opportunity/add";
 
   public addOpportunity(OpportunityObject : Opportunity) : any
   {
     let httpHeaders = new HttpHeaders({
       'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods':'GET,POST,OPTIONS,DELETE,PUT'
     });
 
     let options = {
         headers: httpHeaders
     };
 
-    return this.http.post(this.url,OpportunityObject,options);
+    return this.http.post(this.addUrl,OpportunityObject,options);
+  }
+
+  public getAllOpportunities()
+  {
+    return this.http.get("http://localhost:8080/opportunity/getAll");
   }
 }
