@@ -1,0 +1,28 @@
+#createOpportunity
+{
+  background: #f1f1f1;
+  box-shadow: 1px 1px 3px black;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+}
+
+.dialogClassBackground
+{
+  background-color: black;
+}
+
+::ng-deep .red-snackbar {
+  background: #ff7f7f;
+  color: black;
+  box-shadow: 2px 2px 4px black;
+}
+
+::ng-deep .green-snackbar{
+
+  background-color: green;
+  color:black;
+  box-shadow: 2px 2px 4px black;
+}

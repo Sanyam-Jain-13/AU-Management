@@ -1,0 +1,32 @@
+<nav class="navbar-nav navbar-expand bg-dark">
+  <a class="navbar-brand col-md-1">
+    <img src="../../../assets/Accolite.jpg" class="img-fluid"/>
+  </a>
+  <ul class="navbar-nav my-auto" style="cursor: pointer;">
+    <li class="nav-item px-3" routerLink="./opportunity">
+      <a class="nav-link text-light">Opportunity</a>
+    </li>
+    <li class="nav-item px-3" routerLink="./trends">
+      <a class="nav-link text-light">Trends</a>
+    </li>
+    <li class="nav-item px-3" routerLink="./audit">
+      <a class="nav-link text-light">Audits</a>
+    </li>
+    <li class="nav-item px-3" routerLink="./search">
+      <a class="nav-link text-light">Search</a>
+    </li>
+  </ul>
+  <div class="navbar-nav ml-auto my-auto mx-2 text-light" style="cursor: pointer;">
+    <li class="nav-item my-auto">
+      <a class="nav-link text-light">
+        <img src="{{user.photoUrl}}" class="col-md-3 my-auto">Welcome {{user.firstName}}
+      </a>
+    </li>
+
+    <li class="nav-item my-auto" (click)="signOut()">
+      <a class="nav-link text-light"><i class="fas fa-sign-out-alt"></i></a>
+    </li>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
