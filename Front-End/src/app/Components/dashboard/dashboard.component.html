@@ -1,4 +1,4 @@
-<nav class="navbar-nav navbar-expand bg-dark">
+<nav class="navbar-nav navbar-expand bg-dark" style="opacity: 0.8;">
   <a class="navbar-brand col-md-1">
     <img src="../../../assets/Accolite.jpg" class="img-fluid"/>
   </a>
@@ -16,14 +16,11 @@
       <a class="nav-link text-light">Search</a>
     </li>
   </ul>
-  <div class="navbar-nav ml-auto my-auto text-light mx-2" style="cursor: pointer;">
-    <div class="nav-item my-auto flex d-flex justify-content-end">
-      <a class="nav-link text-light float-right">
-        <img src="{{user.photoUrl}}" class="col-md-4 my-auto img-fluid">Hey {{user.firstName}}!
-      </a>
-    </div>
-    <div class="nav-item my-auto" (click)="signOut()">
-      <a class="nav-link text-light"><i class="fas fa-sign-out-alt"></i></a>
+  <div class="navbar-nav ml-auto my-auto bg-secondary text-light" style="cursor: pointer;">
+    <div class="row my-auto">
+      <div class="col-md-3"><img src="{{user.photoUrl}}" class="my-auto img-fluid"></div>
+      <div class="col-md-5 my-auto">Hey {{user.firstName}}!</div>
+      <div class="col-md-1 my-auto text-dark" (click)="signOut()" ><i class="fas fa-sign-out-alt"></i></div>
     </div>
   </div>
 </nav>

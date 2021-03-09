@@ -9,6 +9,9 @@ import { TrendsComponent } from './Components/dashboard/trends/trends.component'
 import { LoginComponent } from './Components/login/login.component';
 import { DashboardComponent } from './Components/dashboard/dashboard.component';
 import { HttpClientModule } from '@angular/common/http';
+import { YoYChartComponent } from './Components/dashboard/trends/yoy-chart/yoy-chart.component';
+import { LocationChartComponent } from './Components/dashboard/trends/location-chart/location-chart.component';
+import { SkillChartComponent } from './Components/dashboard/trends/skill-chart/skill-chart.component';
 
 const routes: Routes = [
   { path:'', component:HomeComponent},
@@ -19,7 +22,13 @@ const routes: Routes = [
     { path:'',redirectTo:'dashboard/opportunity',pathMatch:'full'},
     { path: 'opportunity', component: OpportunityComponent,canActivate:[AuthGuard]},
     { path: 'search', component: SearchComponent,canActivate:[AuthGuard] },
-    { path: 'trends', component: TrendsComponent,canActivate:[AuthGuard] },
+    { path: 'trends', component: TrendsComponent,canActivate:[AuthGuard], children:[
+
+      {path:'YoY',component:YoYChartComponent,canActivate:[AuthGuard]},
+      {path:'Location',component:LocationChartComponent,canActivate:[AuthGuard]},
+      {path:'Skills',component:SkillChartComponent,canActivate:[AuthGuard]}
+    ] },
+    
     { path: 'audit', component: AuditComponent,canActivate:[AuthGuard]}
 
   ]},

@@ -1,10 +1,10 @@
-<div *ngIf="!user" class="card text-center mt-4">
-  <h5 class="card-header font-weight-bold">Welcome to Opportunity Management!</h5>
+<div *ngIf="!user" class="card text-center mt-4" style="opacity: 0.7;">
+  <h3 class="card-header font-weight-bold">Welcome to Opportunity Management</h3>
   <div class="card-block">
-    <h4 class="card-text font-weight-bold">Sign In Using</h4>
+    <h4 class="card-text font-weight-bold">Sign In Using Gmail <i class="fas fa-sign-in-alt"></i></h4>
   </div>
-  <div class="card-block">
-    <button class="btn col-md-2" (click)="signInWithGoogle()">
+  <div class="card-block mt-2">
+    <button class="btn col-md-3" (click)="signInWithGoogle()">
       <img src="../../../assets/Google.png"class="img-fluid">
     </button>
   </div>

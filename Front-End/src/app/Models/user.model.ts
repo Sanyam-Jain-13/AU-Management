@@ -1,5 +1,5 @@
 export class User {
-  
+
   public userId:String;
   public firstName:String;
   public lastName:String;
@@ -13,6 +13,5 @@ export class User {
     this.email = email;
     this.photoUrl = photoUrl;
   }
-
 
 }

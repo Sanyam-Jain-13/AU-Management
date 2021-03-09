@@ -37,13 +37,15 @@ public class OpportunityController {
         return opportunityServiceImpl.insert(opportunity) ;
     }
 
+    @CrossOrigin("http://localhost:4200")
     @PostMapping(value = "/update/{id}")
     public int updateOpportunity(@PathVariable("id") int id,@RequestBody Opportunity opportunity)
     {
         return opportunityServiceImpl.update(opportunity,id);
     }
 
-    @PostMapping(value = "/delete/{id}")
+    @CrossOrigin("http://localhost:4200")
+    @GetMapping(value = "/delete/{id}")
     public int deleteOpportunity(@PathVariable("id") int id)
     {
         return opportunityServiceImpl.delete(id);

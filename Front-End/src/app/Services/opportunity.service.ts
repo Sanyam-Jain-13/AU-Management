@@ -29,4 +29,13 @@ export class OpportunityService {
   {
     return this.http.get("http://localhost:8080/opportunity/getAll");
   }
+
+  public deleteOpportunity(id) {
+    return this.http.get("http://localhost:8080/opportunity/delete/"+id);
+  }
+
+  public editOpportunity(Opportunity)
+  {
+    return this.http.post("http://localhost:8080/opportunity/update/"+Opportunity.id,Opportunity);
+  }
 }

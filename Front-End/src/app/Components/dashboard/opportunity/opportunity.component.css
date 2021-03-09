@@ -26,3 +26,16 @@ table {
   color:black;
   box-shadow: 2px 2px 4px black;
 }
+
+.mat-icon
+{
+  font-size: 20px;
+}
+
+.mat-cell{
+  font-size: 12px;
+  word-wrap: normal;
+  font-weight: bold;
+  padding: 10px 5px;
+  cursor: pointer;
+}

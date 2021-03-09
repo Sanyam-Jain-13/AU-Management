@@ -11,6 +11,7 @@ import {MatSnackBar, MatSnackBarConfig} from '@angular/material/snack-bar';
 import { SocialUser } from 'angularx-social-login';
 import {OpportunityService} from '../../../Services/opportunity.service';
 import { UserService } from 'src/app/Services/user.service';
+import { User } from 'src/app/Models/user.model';
 
 @Component({
   selector: 'app-opportunity',
@@ -27,24 +28,35 @@ export class OpportunityComponent implements OnInit {
   defaultOpportunity : Opportunity;
   snackBarConf = new MatSnackBarConfig();
   user:SocialUser;
+
+  //Create Opportunity Form Values
   data:Opportunity=new Opportunity();
-  opportunities : any;
+
+  //opportunities : any;
   dataSource = new MatTableDataSource < Opportunity > ();
   allUser : any;
   currentUser : any;
+  displayedColumns: string[] = ['oppid', 'userName', 'userEmail', 'description', 'location', 'endDate', 'skills', 'minxp', 'demand','getdetails'];
+
 
   //-----------------------------------------------------------------------
   //ALL THE VIEW TEMPLATES
   @ViewChild('CreateOpportunityForm') addTemplate: TemplateRef < any > ;
   public addDialog: MatDialogRef < TemplateRef < any >> ;
 
+  @ViewChild('EditOpportunityForm') editTemplate : TemplateRef< any >;
+  public editDialog : MatDialogRef < TemplateRef < any>>;
+
   @ViewChild('snackBarTemplate')
   snackBarTemplate: TemplateRef < any > ;
 
   @ViewChild(MatPaginator, {
     static: true
-}) paginator: MatPaginator;
+  }) paginator: MatPaginator;
 
+  @ViewChild(MatSort, {
+    static: true
+  }) sort: MatSort;
 
   //-----------------------------------------------------------------------
 
@@ -82,9 +94,10 @@ export class OpportunityComponent implements OnInit {
         this.allUser = data;
         console.log(this.allUser);
         this.OppoService.getAllOpportunities().subscribe((data : any)=>{
-          this.opportunities = data;
+          //this.opportunities = data;
           this.dataSource.data = data;
-          this.dataSource.paginator = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         });
       })
     })
@@ -97,9 +110,7 @@ export class OpportunityComponent implements OnInit {
   }
   //-----------------------------------------------------------------------
 
-  displayedColumns: string[] = ['oppid', 'userName', 'userEmail', 'description', 'location', 'endDate', 'skills', 'minxp', 'demand','getdetails'];
-
-  //-----------------------------------------------------------------------
+  //######################################################
 
   //Create opportunity dialog box
   public openCreateOpportunity() : void{
@@ -110,34 +121,45 @@ export class OpportunityComponent implements OnInit {
       dialogConfig.autoFocus = false;
       dialogConfig.role = 'dialog';
       dialogConfig.disableClose = true;
+      dialogConfig.panelClass = "add-dialog-box";
       this.addDialog = this.dialog.open(this.addTemplate, dialogConfig);
   }
 
-  //-----------------------------------------------------------------------
+  //######################################################
+
+  public openEditOpportunityDialog(data : any)
+  {
+    this.addOpportunityForm = this.fb.group(data);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.restoreFocus = false;
+    dialogConfig.autoFocus = false;
+    dialogConfig.role = 'dialog';
+    dialogConfig.disableClose = true;
+    this.editDialog = this.dialog.open(this.editTemplate, dialogConfig);
+  }
+
+  //######################################################
 
   //on clicking cancel button in Create and Edit Opportunity
   public onCancel(data : any) {
     let msg : any;
     if (data == 'Add') {
         this.addDialog.close();
-        msg = "Creating Opportunity aborted !!";
+        msg = "Creating Opportunity aborted !";
     }
+    if (data == 'Edit') {
+      this.editDialog.close();
+      msg = "Editing Opportunity Cancelled !";
+  }
     this.snackBarConf.panelClass = 'red-snackbar';
     this.snackBar.open(msg,'', this.snackBarConf);
   }
 
+  //######################################################
+
+  //on submitting new opportunity object in Db
   public onSubmit()
   {
-    // date: ""
-    // demand: 0
-    // description: ""
-    // endDate: "NaN-aN-aN"
-    // id: 0
-    // location: ""
-    // minExperience: 0
-    // skills: ""
-    // userId: "105623594884336759836"
-
     //console.log(data);
     this.data=this.addOpportunityForm.value;
     this.data.userId = String(this.user.id);
@@ -145,27 +167,25 @@ export class OpportunityComponent implements OnInit {
     let date1 = JSON.stringify(event)
     date1 = date1.slice(1,11)
 
-    console.log(this.data.date);
-    console.log(date1);
+    // console.log(this.data.date);
+    // console.log(date1);
 
     this.data.date=date1;
     this.data.location=this.data.location.charAt(0).toUpperCase() + this.data.location.slice(1);
 
-    console.log(this.data.location);
+    //console.log(this.data.location);
 
     const words = this.data.skills.split(",");
     this.data.skills=words.map((word) => {
-     return word[0].toUpperCase() + word.substring(1);
-}).join(",");
-
-    // const EndingDate = new Date(data.date);
-    // const day = ("0" + EndingDate.getDate()).slice(-2);
-    // const month = ("0" + (EndingDate.getMonth() + 1)).slice(-2);
-    // const year = EndingDate.getFullYear();
-    // const FinalEndingDate = year+"-"+month+"-"+day;
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(",");
 
 
     this.OppoService.addOpportunity(this.data).subscribe((data)=>{
+      this.OppoService.getAllOpportunities().subscribe((res : any[])=>{
+        this.dataSource.data = res;
+        this.dataSource.paginator = this.paginator;
+      })
       this.snackBarConf.panelClass = 'green-snackbar';
       this.snackBar.open("Opportunity Created Successfully",'', this.snackBarConf);
       this.addDialog.close();
@@ -173,4 +193,60 @@ export class OpportunityComponent implements OnInit {
 
     //console.log(data);
   }
+  //######################################################
+
+  //On clicking edit button in editing opportunity
+  public onEdit()
+  {
+    //console.log(data);
+    this.data=this.addOpportunityForm.value;
+    this.data.userId = String(this.user.id);
+
+    var event = new Date(this.data.date);
+    let date1 = JSON.stringify(event)
+    date1 = date1.slice(1,11)
+
+    this.data.date=date1;
+    this.data.location=this.data.location.charAt(0).toUpperCase() + this.data.location.slice(1);
+
+    //console.log(this.data.location);
+
+    const words = this.data.skills.split(",");
+    this.data.skills=words.map((word) => {
+      return word[0].toUpperCase() + word.substring(1);
+    }).join(",");
+
+
+    this.OppoService.editOpportunity(this.data).subscribe((data)=>{
+      this.OppoService.getAllOpportunities().subscribe((res : any[])=>{
+        this.dataSource.data = res;
+        this.dataSource.paginator = this.paginator;
+      })
+      this.snackBarConf.panelClass = 'green-snackbar';
+      this.snackBar.open("Opportunity Updated Successfully",'', this.snackBarConf);
+      this.editDialog.close();
+    });
+
+  }
+
+  //######################################################
+
+  //on deleting particular row from Db
+  public deleteRow(id : any){
+    console.log(id);
+    this.OppoService.deleteOpportunity(id).subscribe((data)=>{
+      this.OppoService.getAllOpportunities().subscribe((data : any)=>{
+        this.dataSource.data = data;
+        this.dataSource.paginator = data;
+      });
+
+      this.snackBarConf.panelClass = "green-snackbar";
+      this.snackBar.open("Opportunity Deleted!",'',this.snackBarConf);
+    })
+  }
+
+  //######################################################
+
+
+
 }

@@ -32,6 +32,11 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+
+import { LocationChartComponent } from './Components/dashboard/trends/location-chart/location-chart.component';
+import { SkillChartComponent } from './Components/dashboard/trends/skill-chart/skill-chart.component';
+import { YoYChartComponent } from './Components/dashboard/trends/yoy-chart/yoy-chart.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +48,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SearchComponent,
     DashboardComponent,
     OpportunityComponent,
+    LocationChartComponent,
+    SkillChartComponent,
+    YoYChartComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +63,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
     MatCardModule,MatToolbarModule,MatTableModule,MatPaginatorModule,MatSortModule,MatIconModule,
     MatFormFieldModule,MatInputModule,MatDatepickerModule,MatNativeDateModule,MatDialogModule,MatButtonModule,
-    MatSnackBarModule
+    MatSnackBarModule,MatSelectModule
 
   ],
   providers: [

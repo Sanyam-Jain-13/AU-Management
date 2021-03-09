@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     this.aService.authState.subscribe((user)=>{
       this.user = user;
       //this.userObj = new User(this.user.id,this.user.firstName,this.user.lastName,this.user.email,this.user.photoUrl);
-
     });
 
     if(localStorage.getItem("APP_TOKEN")){
@@ -32,14 +31,8 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  async signInWithGoogle() {
-
-    await this.auth.signingInWithGoogle();
-    console.log("after await");
-
-    // this.auth.addUser(this.userObj).subscribe((data)=>{
-    //   console.log("User Added!");
-    // });
+  signInWithGoogle() {
+    this.auth.signingInWithGoogle();
   }
 
   signOut() : any{
