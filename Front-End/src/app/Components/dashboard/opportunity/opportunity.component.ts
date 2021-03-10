@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild,TemplateRef, Output, Input } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
@@ -12,6 +12,7 @@ import { SocialUser } from 'angularx-social-login';
 import {OpportunityService} from '../../../Services/opportunity.service';
 import { UserService } from 'src/app/Services/user.service';
 import { User } from 'src/app/Models/user.model';
+import * as EventEmitter from 'node:events';
 
 @Component({
   selector: 'app-opportunity',
@@ -160,20 +161,18 @@ export class OpportunityComponent implements OnInit {
   //on submitting new opportunity object in Db
   public onSubmit()
   {
-    //console.log(data);
+
     this.data=this.addOpportunityForm.value;
     this.data.userId = String(this.user.id);
-    var event = new Date(this.data.date);
-    let date1 = JSON.stringify(event)
-    date1 = date1.slice(1,11)
 
-    // console.log(this.data.date);
-    // console.log(date1);
+    var event = new Date(this.data.date);
+    let date1 = JSON.stringify(event);
+
+    date1 = date1.slice(1,11);
 
     this.data.date=date1;
     this.data.location=this.data.location.charAt(0).toUpperCase() + this.data.location.slice(1);
 
-    //console.log(this.data.location);
 
     const words = this.data.skills.split(",");
     this.data.skills=words.map((word) => {
@@ -191,7 +190,6 @@ export class OpportunityComponent implements OnInit {
       this.addDialog.close();
     });
 
-    //console.log(data);
   }
   //######################################################
 
@@ -247,6 +245,16 @@ export class OpportunityComponent implements OnInit {
 
   //######################################################
 
+  public applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+    // this.dataSource.filterPredicate = (data: any, filterValue) => {
+    //   const dataStr =JSON.stringify(data).toLowerCase();
+    //   console.log(dataStr);
+    //   return dataStr.indexOf(filterValue) != -1;
+    // }
+  }
 
 
 }

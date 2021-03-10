@@ -39,3 +39,15 @@ table {
   padding: 10px 5px;
   cursor: pointer;
 }
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  line-height: 2.375rem;
+  text-align: center;
+  color: #aaa;
+}

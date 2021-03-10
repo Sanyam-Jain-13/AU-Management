@@ -1,11 +1,7 @@
 package com.accolite.opportunitymanagement.service.Impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import javax.sql.DataSource;
 
@@ -23,35 +19,58 @@ public class TrendServiceImpl {
     private DataSource datasource;
 	
 	public List<String> getByLocation(){
-		List<String> LocationList = new ArrayList<String>();
+		Set<String> LocationList = new HashSet<String>() {};
 		String query = "select distinct location from Opportunity";
-		
+
 		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 		for(Map<String,Object> row : Rows){
 			String loc = (String.valueOf(row.get("location")));
-			LocationList.add(loc);
-			System.out.println(row);
+			loc = loc.toUpperCase();
+			String[] arrOfLoc = loc.split(",");
+			for(String s:arrOfLoc)
+			{
+				s=s.trim();
+				LocationList.add(s);
+			}
 		}
-		for(String s:LocationList) {
-			System.out.println(s);
-		}
-		return LocationList;
+		List<String>NewLocationList = new ArrayList<>(LocationList);
+		return NewLocationList;
 	}
 	
 	public List<Long> getByLocationCount(){
 		List<Long> locationCount = new ArrayList<Long>();
-		String query = "select count(*) from Opportunity group by location";
+		HashMap<String,Long> hMap= new HashMap<>();
+		String query = "select count(*),location from Opportunity group by location";
+
 		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
+
 		for(Map<String,Object> row : Rows){
-			Long val = (long) (row.get("count(*)"));
-			locationCount.add(val);
-//			System.out.println(row);
+			Long val = (Long) row.get("count(*)");
+			String loc = (String.valueOf(row.get("location")));
+			loc = loc.toUpperCase();
+
+			String[] arrOfLoc = loc.split(",");
+
+			for(String s: arrOfLoc){
+				s = s.trim();
+				System.out.println(s);
+				if (!hMap.containsKey(s)) {
+					hMap.put(s, val);
+				}
+				else {
+					Long count = hMap.get(s);
+					hMap.put(s, count + val);
+				}
+			}
+		 }
+
+		for (HashMap.Entry<String, Long> entry : hMap.entrySet())
+		{
+			locationCount.add(entry.getValue());
 		}
-		for(Long s:locationCount) {
-			System.out.println(s);
-		}
+		System.out.println(hMap);
 		return locationCount;
 	}
 	
@@ -65,6 +84,7 @@ public List<String> getBySkill(){
 		String skill = (String.valueOf(row.get("skills")));
 		String[] arrOfStr = skill.split(",");
 		for(String s: arrOfStr) {
+			s=s.trim();
 			if (!hMap.containsKey(s)) {  
 			      hMap.put(s, 1);
 			    }
@@ -89,6 +109,7 @@ public List<String> getBySkill(){
 			String skill = (String.valueOf(row.get("skills")));
 			String[] arrOfStr = skill.split(",");
 			for(String s: arrOfStr) {
+				s=s.trim();
 				if (!hMap.containsKey(s)) {  
 				      hMap.put(s, 1);
 				    }

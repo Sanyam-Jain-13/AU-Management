@@ -1,24 +1,7 @@
 .btn{
-    margin-left: 10px;
+    width: 250px;
+    height: 50px;
+    margin: 0 10px;
+    box-shadow: 4px 4px 9px black;
+    opacity: 0.8;
 }
-/* button{
-    background-color:rgba(52, 218, 116, 0.836);
-    margin: 6px 8px 6px 8px;
-    min-width: 88px;
-    border-radius: 3px;
-    font-size: 14px;
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration:none;
-    border: none;
-    outline: none;
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-    border-radius: 0;
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 5px 12px;
-    text-align: center;
-    margin: 4px 2px;
-    cursor: pointer;
-} */

@@ -14,15 +14,15 @@ export class SkillChartComponent implements OnInit {
   skillchart = [];
 
   constructor(private trendsService:TrendsService) {
-    console.log("hello");
+
     this.trendsService.getSkillLabel().subscribe(labels=>{
       this.skills= labels;
-      // console.log("from back"+labels);
-      console.log(this.skills);
+
       this.trendsService.getSkillCount().subscribe(counts=>{
         this.count=counts;
+
         this.skillchart = new Chart('canvas', {
-          type: 'doughnut',
+          type: 'pie',
           data: {
             labels: this.skills,
             datasets: [
@@ -79,7 +79,7 @@ export class SkillChartComponent implements OnInit {
     });
   });
   }
-
+  
   ngOnInit(): void {
   }
 

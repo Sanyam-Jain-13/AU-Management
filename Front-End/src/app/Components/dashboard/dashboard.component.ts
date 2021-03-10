@@ -6,13 +6,13 @@ import { SocialAuthService, SocialUser } from 'angularx-social-login';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 
 export class DashboardComponent implements OnInit {
 
   constructor(private auth:AuthService,private route:Router) { }
-
+  searchKey : string;
   user:SocialUser;
 
   ngOnInit(): void {

@@ -12,15 +12,19 @@
     <li class="nav-item px-3" routerLink="./audit">
       <a class="nav-link text-light">Audits</a>
     </li>
-    <li class="nav-item px-3" routerLink="./search">
+    <!-- <li class="nav-item px-3 col-md-9" routerLink="./search">
       <a class="nav-link text-light">Search</a>
-    </li>
+      <div class="has-search row mx-2 col-md-9">
+        <span class="fa fa-search form-control-feedback mx-3 my-auto"></span>
+        <input type="search" class="form-control" placeholder="Search" [(ngModel)]="searchKey">
+      </div>
+    </li> -->
   </ul>
-  <div class="navbar-nav ml-auto my-auto bg-secondary text-light" style="cursor: pointer;">
+  <div class="navbar-nav ml-auto my-auto bg-secondary text-light col-md-2 mx-2 border rounded-top border-secondary" style="cursor: pointer;">
     <div class="row my-auto">
       <div class="col-md-3"><img src="{{user.photoUrl}}" class="my-auto img-fluid"></div>
-      <div class="col-md-5 my-auto">Hey {{user.firstName}}!</div>
-      <div class="col-md-1 my-auto text-dark" (click)="signOut()" ><i class="fas fa-sign-out-alt"></i></div>
+      <div class="col-md-7 my-auto">Hey {{user.firstName}}!</div>
+      <div class="col-md-2 my-auto text-dark" (click)="signOut()" ><i class="fas fa-sign-out-alt"></i></div>
     </div>
   </div>
 </nav>

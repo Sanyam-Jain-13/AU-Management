@@ -67,7 +67,7 @@ public class TrendController {
         yoyCount = trendServiceImpl.getByYoYCount();
         return yoyCount;
 	}
-	
+
 	@CrossOrigin("http://localhost:4200")
 	@GetMapping(value="/getYoY/{location}")
 	public List<String> getYoY(@PathVariable("location") String location){
@@ -75,7 +75,7 @@ public class TrendController {
         yoyList = trendServiceImpl.getByYoY(location);
         return yoyList;
 	}
-	
+
 	@CrossOrigin("http://localhost:4200")
 	@GetMapping(value="/getYoYCount/{location}")
 	public List<Integer> getYoYCount(@PathVariable("location") String location){
