@@ -110,4 +110,5 @@ public class Opportunity {
                 ", date=" + date +
                 '}';
     }
+
 }
