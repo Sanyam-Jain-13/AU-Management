@@ -1,0 +1,53 @@
+#createOpportunity
+{
+  background: #f1f1f1;
+  box-shadow: 1px 1px 3px black;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+}
+
+.dialogClassBackground
+{
+  background-color: black;
+}
+
+::ng-deep .red-snackbar {
+  background: #ff7f7f;
+  color: black;
+  box-shadow: 2px 2px 4px black;
+}
+
+::ng-deep .green-snackbar{
+
+  background-color: green;
+  color:black;
+  box-shadow: 2px 2px 4px black;
+}
+
+.mat-icon
+{
+  font-size: 20px;
+}
+
+.mat-cell{
+  font-size: 12px;
+  word-wrap: normal;
+  font-weight: bold;
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  line-height: 2.375rem;
+  text-align: center;
+  color: #aaa;
+}

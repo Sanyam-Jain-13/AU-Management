@@ -1,0 +1,27 @@
+<div *ngIf="!user" class="card text-center mt-4" style="opacity: 0.7;">
+  <h3 class="card-header font-weight-bold">Welcome to Opportunity Management</h3>
+  <div class="card-block">
+    <h4 class="card-text font-weight-bold">Sign In Using Gmail <i class="fas fa-sign-in-alt"></i></h4>
+  </div>
+  <div class="card-block mt-2">
+    <button class="btn col-md-3" (click)="signInWithGoogle()">
+      <img src="../../../assets/Google.png"class="img-fluid">
+    </button>
+  </div>
+</div>
+
+<div *ngIf="user" class="card text-center mt-4" style="box-shadow: 1px 1px 3px silver;">
+  <h5 class="card-header font-weight-bold">Hello <span class="text-capitalize">{{user.name}}!</span></h5>
+  <div class="card-block"></div>
+  <img src="{{user.photoUrl}}" class="card-img-top img-responsive photo col-md-9 mx-auto" alt="User Image">
+  <div class="card-block my-3">
+    <h4 class="card-title text-capitalize font-weight-bolder text-secondary">{{user.name}}</h4>
+    <h4 class="card-title font-weight-bolder text-secondary">{{user.email}}</h4>
+  </div>
+  <div class="card-block col-md-6 mx-auto my-2">
+    <button class="btn btn-danger btn-block" (click)="signOut()">Sign Out</button>
+  </div>
+</div>
+
+
+
