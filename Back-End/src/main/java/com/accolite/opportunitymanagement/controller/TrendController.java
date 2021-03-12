@@ -68,19 +68,19 @@ public class TrendController {
         return yoyCount;
 	}
 
-	@CrossOrigin("http://localhost:4200")
-	@GetMapping(value="/getYoY/{location}")
-	public List<String> getYoY(@PathVariable("location") String location){
-		List<String> yoyList = new ArrayList<>();
-        yoyList = trendServiceImpl.getByYoY(location);
-        return yoyList;
-	}
-
-	@CrossOrigin("http://localhost:4200")
-	@GetMapping(value="/getYoYCount/{location}")
-	public List<Integer> getYoYCount(@PathVariable("location") String location){
-		List<Integer> yoyCount = new ArrayList<>();
-        yoyCount = trendServiceImpl.getByYoYCount(location);
-        return yoyCount;
-	}
+//	@CrossOrigin("http://localhost:4200")
+//	@GetMapping(value="/getYoY/{location}")
+//	public List<String> getYoY(@PathVariable("location") String location){
+//		List<String> yoyList = new ArrayList<>();
+//        yoyList = trendServiceImpl.getByYoY(location);
+//        return yoyList;
+//	}
+//
+//	@CrossOrigin("http://localhost:4200")
+//	@GetMapping(value="/getYoYCount/{location}")
+//	public List<Integer> getYoYCount(@PathVariable("location") String location){
+//		List<Integer> yoyCount = new ArrayList<>();
+//        yoyCount = trendServiceImpl.getByYoYCount(location);
+//        return yoyCount;
+//	}
 }

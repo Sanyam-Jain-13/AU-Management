@@ -1,10 +1,6 @@
 package com.accolite.opportunitymanagement.service.Impl;
 
 import java.util.*;
-import java.util.Map.Entry;
-
-import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,16 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("TrendService")
 @Transactional
 public class TrendServiceImpl {
-	
-	
+
 	@Autowired
-    private DataSource datasource;
+	private JdbcTemplate jdbcTemplate;
 	
 	public List<String> getByLocation(){
 		Set<String> LocationList = new HashSet<String>() {};
 		String query = "select distinct location from Opportunity";
 
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 		for(Map<String,Object> row : Rows){
 			String loc = (String.valueOf(row.get("location")));
@@ -43,7 +38,7 @@ public class TrendServiceImpl {
 		HashMap<String,Long> hMap= new HashMap<>();
 		String query = "select count(*),location from Opportunity group by location";
 
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 
 		for(Map<String,Object> row : Rows){
@@ -78,7 +73,7 @@ public List<String> getBySkill(){
 	List<String> skillList = new ArrayList<String>();
 	HashMap<String,Integer> hMap= new HashMap<>();
 	String query = "select skills from Opportunity";
-	JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+	//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 	List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 	for(Map<String,Object> row : Rows){
 		String skill = (String.valueOf(row.get("skills")));
@@ -103,7 +98,7 @@ public List<String> getBySkill(){
 		List<Integer> skillList = new ArrayList<Integer>();
 		HashMap<String,Integer> hMap= new HashMap<>();
 		String query = "select skills from Opportunity";
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 		for(Map<String,Object> row : Rows){
 			String skill = (String.valueOf(row.get("skills")));
@@ -129,7 +124,7 @@ public List<String> getBySkill(){
 		List<String> yearList = new ArrayList<String>();
 		TreeMap<String,Integer> hMap= new TreeMap<>();
 		String query = "select date from Opportunity";	
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 		for(Map<String,Object> row : Rows){
 			String year = (String.valueOf(row.get("date"))).substring(0, 4);
@@ -150,7 +145,7 @@ public List<String> getBySkill(){
 		List<Integer> yearList = new ArrayList<Integer>();
 		TreeMap<String,Integer> hMap= new TreeMap<>();
 		String query = "select date,demand from Opportunity";	
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
 		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query);
 		for(Map<String,Object> row : Rows){
 			String year = (String.valueOf(row.get("date"))).substring(0, 4);
@@ -170,49 +165,49 @@ public List<String> getBySkill(){
 		return yearList;
 	}
 	
-	public List<String> getByYoY(String loc){
-		List<String> yearList = new ArrayList<String>();
-		TreeMap<String,Integer> hMap= new TreeMap<>();
-		String query = "select date from Opportunity where location=?";	
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
-		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query, new Object[]{loc});
-		for(Map<String,Object> row : Rows){
-			String year = (String.valueOf(row.get("date"))).substring(0, 4);
-			if (!hMap.containsKey(year)) {  
-			      hMap.put(year, 1);
-			    }
-			    else {
-			      int count = hMap.get(year);
-			      hMap.put(year, count + 1);
-			    }
-			System.out.println(row);
-		}
-		for (Map.Entry<String, Integer> entry : hMap.entrySet())  
-	         yearList.add(entry.getKey()); 
-		return yearList;
-	}
-	
-	public List<Integer> getByYoYCount(String location){
-		List<Integer> yearList = new ArrayList<Integer>();
-		TreeMap<String,Integer> hMap= new TreeMap<>();
-		String query = "select date,demand from Opportunity where location=?";	
-		JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
-		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query, new Object[] {location});
-		for(Map<String,Object> row : Rows){
-			String year = (String.valueOf(row.get("date"))).substring(0, 4);
-			int demand = (int) ((row.get("demand")));
-			if (!hMap.containsKey(year)) {  
-			      hMap.put(year, demand);
-			    }
-			    else {
-			      int count = hMap.get(year);
-			      hMap.put(year, count + demand);
-			    }
-			System.out.println(year+" "+demand);
-		}
-		for (Map.Entry<String, Integer> entry : hMap.entrySet())  
-	         yearList.add(entry.getValue()); 
-		return yearList;
-	}
+//	public List<String> getByYoY(String loc){
+//		List<String> yearList = new ArrayList<String>();
+//		TreeMap<String,Integer> hMap= new TreeMap<>();
+//		String query = "select date from Opportunity where location=?";
+//		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+//		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query, new Object[]{loc});
+//		for(Map<String,Object> row : Rows){
+//			String year = (String.valueOf(row.get("date"))).substring(0, 4);
+//			if (!hMap.containsKey(year)) {
+//			      hMap.put(year, 1);
+//			    }
+//			    else {
+//			      int count = hMap.get(year);
+//			      hMap.put(year, count + 1);
+//			    }
+//			System.out.println(row);
+//		}
+//		for (Map.Entry<String, Integer> entry : hMap.entrySet())
+//	         yearList.add(entry.getKey());
+//		return yearList;
+//	}
+//
+//	public List<Integer> getByYoYCount(String location){
+//		List<Integer> yearList = new ArrayList<Integer>();
+//		TreeMap<String,Integer> hMap= new TreeMap<>();
+//		String query = "select date,demand from Opportunity where location=?";
+//		//JdbcTemplate jdbcTemplate= new JdbcTemplate(datasource);
+//		List<Map<String,Object>> Rows = jdbcTemplate.queryForList(query, new Object[] {location});
+//		for(Map<String,Object> row : Rows){
+//			String year = (String.valueOf(row.get("date"))).substring(0, 4);
+//			int demand = (int) ((row.get("demand")));
+//			if (!hMap.containsKey(year)) {
+//			      hMap.put(year, demand);
+//			    }
+//			    else {
+//			      int count = hMap.get(year);
+//			      hMap.put(year, count + demand);
+//			    }
+//			System.out.println(year+" "+demand);
+//		}
+//		for (Map.Entry<String, Integer> entry : hMap.entrySet())
+//	         yearList.add(entry.getValue());
+//		return yearList;
+//	}
 	
 }
