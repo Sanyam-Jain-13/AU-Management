@@ -1,4 +1,4 @@
-package com.accolite.opportunitymanagement.Controller;
+package com.accolite.opportunitymanagement.controller;
 
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -56,6 +56,16 @@ public class OpportunityControllerTest {
         //Mockito.when(opportunityServiceImpl.getAllOpportunity()).thenReturn(opportunityArrayList);
         mockMvc.perform(get("/opportunity/getAll")).andExpect(status().isOk());
     }
+
+    @Test
+    public void getAllControllerExceptionTest() throws Exception{
+        ArrayList<Opportunity> opportunityArrayList = new ArrayList<>();
+        Opportunity opportunity = setOpportunityObject();
+        opportunityArrayList.add(opportunity);
+        //Mockito.when(opportunityServiceImpl.getAllOpportunity()).thenReturn(opportunityArrayList);
+        mockMvc.perform(get("/opportunity/getAll")).andExpect(status().isOk());
+    }
+
 
     @Test
     public void addTest() throws Exception{

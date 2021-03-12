@@ -1,4 +1,4 @@
-package com.accolite.opportunitymanagement.Controller;
+package com.accolite.opportunitymanagement.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -63,4 +63,5 @@ public class UserControllerTest {
                 .accept(MediaType.APPLICATION_JSON_VALUE)
         ).andExpect(status().isOk());
     }
+
 }

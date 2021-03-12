@@ -1,16 +1,15 @@
-package com.accolite.opportunitymanagement.Service;
+package com.accolite.opportunitymanagement.service;
 
-import com.accolite.opportunitymanagement.mapper.OpportunityMapper;
 import com.accolite.opportunitymanagement.mapper.UserMapper;
 import com.accolite.opportunitymanagement.model.User;
 import com.accolite.opportunitymanagement.service.Impl.UserServiceImpl;
-import com.accolite.opportunitymanagement.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -24,19 +23,21 @@ public class UserServiceTest {
     @InjectMocks
     UserServiceImpl userServiceImpl;
 
-    @Mock
-    JdbcTemplate jdbcTemplate;
+    @Autowired
+    UserService userService;
 
     @Mock
-    UserService userService;
+    JdbcTemplate jdbcTemplate;
 
     @Test
     public void getAllUsersTest() throws Exception {
         ArrayList<User>userList = new ArrayList<>();
         User userObj = getUserObject();
         userList.add(userObj);
-        Mockito.when(userService.getAllUsers()).thenReturn(userList);
-        Assert.assertEquals(userList.size(),userService.getAllUsers().size());
+        Mockito.when(jdbcTemplate.query(Mockito.anyString(),Mockito.any(UserMapper.class))).thenReturn(userList);
+        //Mockito.when(userService.getAllUsers()).thenReturn(userList);
+        ArrayList<User>resUserList = (ArrayList<User>) userServiceImpl.getAllUsers();
+        Assert.assertEquals(userList.size(),resUserList.size());
     }
 
     @Test
@@ -59,6 +60,18 @@ public class UserServiceTest {
         int result = userServiceImpl.insert(userObj);
         Assert.assertEquals(1,result);
     }
+
+    @Test
+    public void insertUserExceptionTest() throws Exception {
+        User userObj = getUserObject();
+        Mockito.when(jdbcTemplate.update(
+                Mockito.anyString(),
+                (Object[])Mockito.any()
+        )).thenThrow(new RuntimeException()).thenReturn(-1);
+        int result = userService.insert(userObj);
+        Assert.assertEquals(-1,result);
+    }
+
     public User getUserObject()
     {
         User user = new User();

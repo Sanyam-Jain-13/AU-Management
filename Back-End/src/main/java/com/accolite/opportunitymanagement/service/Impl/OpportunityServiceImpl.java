@@ -20,6 +20,7 @@ public class OpportunityServiceImpl implements OpportunityService  {
 
     @Override
     public List<Opportunity> getAllOpportunity() throws Exception {
+
         String SQL = "select * from Opportunity";
         return jdbcTemplate.query(SQL,new OpportunityMapper());
     }

@@ -20,13 +20,9 @@ public class OpportunityController {
 
     @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/getAll")
-    public List<Opportunity> getAllOpportunity(){
+    public List<Opportunity> getAllOpportunity() throws Exception {
         List<Opportunity> opportunityList = new ArrayList<>();
-        try {
-            opportunityList = opportunityServiceImpl.getAllOpportunity();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        opportunityList = opportunityServiceImpl.getAllOpportunity();
         return opportunityList;
     }
 

@@ -1,9 +1,10 @@
-package com.accolite.opportunitymanagement.Service;
+package com.accolite.opportunitymanagement.service;
 
 import com.accolite.opportunitymanagement.mapper.OpportunityMapper;
+import com.accolite.opportunitymanagement.mapper.UserMapper;
 import com.accolite.opportunitymanagement.model.Opportunity;
+import com.accolite.opportunitymanagement.model.User;
 import com.accolite.opportunitymanagement.service.Impl.OpportunityServiceImpl;
-import com.accolite.opportunitymanagement.service.OpportunityService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -38,8 +38,11 @@ public class OpportunityServiceTest {
         ArrayList<Opportunity>OpportunityList = new ArrayList<>();
         Opportunity opportunity = opportunityObject();
         OpportunityList.add(opportunity);
-        Mockito.when(opportunityService.getAllOpportunity()).thenReturn(OpportunityList);
-        Assert.assertEquals(OpportunityList.size(),opportunityService.getAllOpportunity().size());
+       // Mockito.when(opportunityService.getAllOpportunity()).thenReturn(OpportunityList);
+        Mockito.when(jdbcTemplate.query(Mockito.anyString(),Mockito.any(OpportunityMapper.class))).thenReturn(OpportunityList);
+        ArrayList<Opportunity>resOppoList = (ArrayList<Opportunity>) opportunityServiceImpl.getAllOpportunity();
+        Assert.assertEquals(OpportunityList.size(),resOppoList.size());
+
     }
 
     @Test

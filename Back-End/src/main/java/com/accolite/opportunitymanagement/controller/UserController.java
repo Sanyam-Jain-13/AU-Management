@@ -20,25 +20,25 @@ public class UserController {
 
     @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/getAllUsers")
-    public List<User> getAllUsers(){
+    public List<User> getAllUsers() throws Exception {
         List<User> userList = new ArrayList<>();
-        try {
+//        try {
             userList = userService.getAllUsers();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return userList;
     }
 
     @CrossOrigin("http://localhost:4200")
     @GetMapping(value = "/getUser/{userId}")
-    public User getUser(@PathVariable("userId") String userId){
+    public User getUser(@PathVariable("userId") String userId) throws Exception {
         User user = new User();
-        try {
+        //try {
             user = userService.getUser(userId);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return user;
     }
 
@@ -46,16 +46,15 @@ public class UserController {
     @PostMapping(value = "/add")
     public int addUser(@RequestBody User user) throws Exception
     {
-        System.out.println("Inside adduser API ");
         int statusCode = -1;
-        try {
+//        try {
             statusCode = userService.insert(user);
             System.out.println(statusCode+" is printing");
-        }
-        catch (Exception e){
-            System.out.println(e);
-            return statusCode;
-        }
+//        }
+//        catch (Exception e){
+//            System.out.println(e);
+//            return statusCode;
+//        }
 
         return statusCode;
     }
